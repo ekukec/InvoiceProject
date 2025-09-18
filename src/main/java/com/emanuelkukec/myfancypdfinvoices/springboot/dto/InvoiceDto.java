@@ -1,4 +1,4 @@
-package com.emanuelkukec.myfancypdfinvoices.dto;
+package com.emanuelkukec.myfancypdfinvoices.springboot.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Max;

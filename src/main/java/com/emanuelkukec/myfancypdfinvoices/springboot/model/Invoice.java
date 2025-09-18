@@ -1,4 +1,4 @@
-package com.emanuelkukec.myfancypdfinvoices.model;
+package com.emanuelkukec.myfancypdfinvoices.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -58,3 +58,4 @@ public class Invoice {
         this.amount = amount;
     }
 }
+

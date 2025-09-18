@@ -1,4 +1,4 @@
-package com.emanuelkukec.myfancypdfinvoices.model;
+package com.emanuelkukec.myfancypdfinvoices.springboot.model;
 
 public class User {
     private String id;

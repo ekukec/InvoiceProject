@@ -1,15 +1,15 @@
-package com.emanuelkukec.myfancypdfinvoices.service;
+package com.emanuelkukec.myfancypdfinvoices.springboot.service;
 
-import com.emanuelkukec.myfancypdfinvoices.model.Invoice;
-import com.emanuelkukec.myfancypdfinvoices.model.User;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.emanuelkukec.myfancypdfinvoices.springboot.model.Invoice;
+import com.emanuelkukec.myfancypdfinvoices.springboot.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
@@ -21,16 +21,27 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Component
 public class InvoiceService {
+
     private final JdbcTemplate jdbcTemplate;
     private final UserService userService;
     private final String cdnUrl;
 
-    List<Invoice> invoices = new CopyOnWriteArrayList<>();
-
-    public InvoiceService(JdbcTemplate jdbcTemplate, UserService userService, @Value("${cdn.url}") String cdnUrl) {
-        this.jdbcTemplate = jdbcTemplate;
+    public InvoiceService(UserService userService, JdbcTemplate jdbcTemplate, @Value("${cdn.url}") String cdnUrl) {
         this.userService = userService;
+        this.jdbcTemplate = jdbcTemplate;
         this.cdnUrl = cdnUrl;
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("Fetching PDF Template from S3...");
+        // TODO download from s3 and save locally
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        System.out.println("Deleting downloaded templates...");
+        // TODO actual deletion of PDFs
     }
 
     @Transactional
@@ -71,23 +82,5 @@ public class InvoiceService {
         invoice.setAmount(amount);
         invoice.setUserId(userId);
         return invoice;
-    }
-
-//    WILL BE USING CONSTRUCTOR INJECTION INSTEAD OF SETTER OR FIELD INJECTION
-//    @Autowired
-//    public void setUserService(UserService userService) {
-//        this.userService = userService;
-//    }
-
-    @PostConstruct
-    public void init(){
-        System.out.println("Fetching PDF templates from S3...");
-        // TODO download from s3 and save locally
-    }
-
-    @PreDestroy
-    public void shutdown(){
-        System.out.println("Deleting downloaded templates...");
-        // TODO actual deletion of PDFs
     }
 }

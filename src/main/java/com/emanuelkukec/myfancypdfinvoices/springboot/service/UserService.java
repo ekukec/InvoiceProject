@@ -1,6 +1,6 @@
-package com.emanuelkukec.myfancypdfinvoices.service;
+package com.emanuelkukec.myfancypdfinvoices.springboot.service;
 
-import com.emanuelkukec.myfancypdfinvoices.model.User;
+import com.emanuelkukec.myfancypdfinvoices.springboot.model.User;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
