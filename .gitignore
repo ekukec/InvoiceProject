@@ -141,6 +141,8 @@ Thumbs.db
 ehthumbs.db
 ehthumbs_vista.db
 
+application.properties
+
 # Dump file
 *.stackdump
 
